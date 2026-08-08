@@ -1,6 +1,6 @@
 # Hailgames App — Progress & Session Notes
 
-## Status: Backend READY, App coded, CI first run in progress
+## Status: Backend READY, App coded, CI GREEN
 
 ### Supabase (DONE)
 - Deleted all old orgs' projects (4 projects). **Orgs shells cannot be deleted via API** — only dashboard. Remaining empty org shells: `Bank`, `WinlatorHub`, `CompraFácil`, `Chat flutter`, `OmniTV`, `SimpsonsHit`. User can delete them in dashboard if desired.
@@ -33,12 +33,18 @@
 - Screens: Auth (login/signup), Home (grid + search + category filters), Content detail (hero, edit/delete), Settings (profile, Painel ADM entry, sign out), AdminPanel (CRUD content), AdminForm (create/edit), AdminManage (role management, owner only).
 - Theme: M3 dynamic color + brand seed fallback.
 
-### GitHub / CI (DONE — initial commit)
+### GitHub / CI (DONE — GREEN build)
 - Repo: `deivid22srk/hailgames-android` (public). NOTE: `deivid22srk/hailgames` is a different project (HailGames Channel Hub website) — kept intact.
 - `build.yml`: ubuntu-latest, JDK 17, setup-android, sdkmanager build-tools/platforms 36, `:app:assembleDebug`, upload APK artifact.
 - Supabase anon key in buildConfigField (public anon key, RLS is the real protection). Secrets file `supabase/local-config.txt` NOT committed.
+- Fixes needed for green build (Supabase 3.6 / Kotlin 2.3 API):
+  - `kotlinOptions { jvmTarget }` → `kotlin { compilerOptions { jvmTarget } }`.
+  - `decodeList`/`decodeSingle` are now **member functions** on `PostgrestResult` (no import needed).
+  - `signUpWith { data }` expects `JsonObject` (`buildJsonObject { put(..., JsonPrimitive(...)) }`).
+  - `httpEngine = OkHttp.create()` (Ktor 3 engine factory, not the object).
+  - `SessionStatus`: `Initializing` replaces `Unknown`; sealed when must be exhaustive.
+  - Compose: import `androidx.compose.foundation.lazy.items` for LazyRow (don't rely on grid.items); `ExposedDropdownMenu` is a scope member, not a top-level import.
 
 ## Next steps
-1. Iterate CI to green build (fix any compile errors found by GitHub Actions).
-2. Verify RLS/security against real Supabase API (auth flow, role checks, storage upload).
-3. Install & smoke-test APK on device.
+1. Verify RLS/security against real Supabase API (auth flow, role checks, storage upload).
+2. Install & smoke-test APK on device.
