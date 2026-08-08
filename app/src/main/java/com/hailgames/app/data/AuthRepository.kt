@@ -7,6 +7,7 @@ import io.github.jan.supabase.auth.providers.builtin.Email
 import io.github.jan.supabase.auth.status.SessionStatus
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 
 class AuthRepository(
@@ -28,7 +29,7 @@ class AuthRepository(
             this.email = email
             this.password = password
             data = buildJsonObject {
-                put("username", username ?: email.substringBefore("@"))
+                put("username", JsonPrimitive(username ?: email.substringBefore("@")))
             }
         }
     }
