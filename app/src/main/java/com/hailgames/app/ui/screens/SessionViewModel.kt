@@ -35,9 +35,9 @@ class SessionViewModel(
                     is SessionStatus.Authenticated -> {
                         refreshProfile()
                     }
+                    is SessionStatus.Initializing,
                     is SessionStatus.NotAuthenticated,
-                    is SessionStatus.RefreshFailure,
-                    is SessionStatus.Unknown -> {
+                    is SessionStatus.RefreshFailure -> {
                         _uiState.value = SessionUiState(isAuthenticated = false, isLoading = false)
                     }
                 }

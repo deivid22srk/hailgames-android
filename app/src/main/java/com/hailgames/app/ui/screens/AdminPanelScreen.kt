@@ -175,7 +175,7 @@ fun AdminPanelScreen(
                                     ContentListItem(
                                         item = item,
                                         categoryName = state.categories.firstOrNull { it.id == item.categoryId }?.name,
-                                        onClick = { onEdit(item.id ?: return@Row) },
+                                        onClick = { item.id?.let(onEdit) },
                                         modifier = Modifier.weight(1f)
                                     )
                                     IconButton(onClick = { itemToDelete = item }) {

@@ -61,7 +61,7 @@ fun MainScaffold(
         when (tabs[selectedTab].route) {
             MainDestinations.HOME -> HomeScreen(
                 onItemClick = onNavigateDetail,
-                modifier = Modifier.paddingBottom(innerPadding.calculateBottomPadding())
+                modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
             )
             MainDestinations.SETTINGS -> SettingsScreen(
                 sessionViewModel = sessionViewModel,

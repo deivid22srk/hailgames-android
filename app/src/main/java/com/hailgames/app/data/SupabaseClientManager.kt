@@ -24,7 +24,7 @@ object SupabaseClientManager {
             install(Auth)
             install(Postgrest)
             install(Storage)
-            httpEngine = OkHttp
+            httpEngine = OkHttp.create()
         }
     }
 }
